@@ -30,3 +30,9 @@ def log(stack, level, package, message):
             print(response["message"])
     except requests.exceptions.RequestException as e:
         print(e)
+
+users = {
+    "221501180@gmail.com": "12345",
+    "viswa@gmail.com": "12345",
+    "v@gmail.com" : "12345",
+}
