@@ -36,3 +36,23 @@ users = {
     "viswa@gmail.com": "12345",
     "v@gmail.com" : "12345",
 }
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json or {}
+    email = data.get("email")
+    password = data.get("password")
+
+    if not email or not password:
+        log("backend", "error", "handler", "Login failed: Missing email or password")
+        return jsonify(error="Email and password are required"), 400
+
+    if email in users and users[email] == password:
+        log("backend", "info", "controller", f"Login successful for {email}")
+        return jsonify(message="Login successful", email=email)
+    else:
+        log("backend", "warn", "handler", f"Login failed for {email}")
+        return jsonify(error="Invalid credentials"), 401
+
+if __name__ == '__main__':
+    app.run(host="0.0.0.0", debug=True)
